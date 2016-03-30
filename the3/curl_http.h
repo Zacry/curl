@@ -1,7 +1,3 @@
-// Copyright (c) 2013, Tencent Inc. All Rights Reserved.
-// Author: Lei Wang (pecywang@tencent.com)
-// Date: 2013-05-23
-
 #ifndef SODEPEND_HTTP_SERVICE_H_
 #define SODEPEND_HTTP_SERVICE_H_
 #pragma once
@@ -22,7 +18,6 @@ struct BuffV
 {
     BuffV() : m_used_len(0), m_total_len(0)
     {
-        // Ĭ�Ϸ���1K
         m_total_len = 256 * 1024 * 1024;
         m_buf = new char[m_total_len];
         memset(m_buf, 0, sizeof(m_buf));
@@ -37,11 +32,8 @@ struct BuffV
         }
     }
 
-    // ���buf�ĳ����Ƿ����need_len
-    // ���С�����Զ���չ
     bool CheckBuffer(size_t need_len)
     {
-        // ���֧��1M
         if(need_len > 1024 * 1024) {
             return false;
         }
@@ -50,7 +42,7 @@ struct BuffV
             return true;
         }
 
-        m_total_len = need_len + 256; // ������һЩ
+        m_total_len = need_len + 256;
         char* new_buf = new char[m_total_len];
         assert(NULL != new_buf);
         memset(new_buf, 0, m_total_len);
@@ -88,10 +80,8 @@ struct BuffV
 private:
     char* m_buf;
 
-    // ��ǰʹ�ó���
     size_t m_used_len;
 
-    // ��ǰ�ܳ���
     size_t m_total_len;
 
 };
@@ -127,12 +117,6 @@ inline std::string HttpURLEncoding(const std::string &sIn)
     return sOut;
 };
 
-// ���յ���ݵĻص�����
-// @param curl���յ���������ڻ�����
-// @param [in] size ��ݳ���
-// @param [in] nmemb ���Ƭ����
-// @param [in/out] �û��Զ���ָ��
-// @return ��ȡ����ݳ���
 size_t CurlCallback(void* ptr, size_t size, size_t nmemb, void* userp)
 {
     size_t read_bytes = size * nmemb;
@@ -163,9 +147,6 @@ public:
         return &curl_http;
     };
 
-    // ��������ĸ��Ӳ���
-    // ��ʽ:key=value&key=value
-    // POST���󴫲�����ô˺���
     void SetHttpParams(const char* format, ...)
     {
         va_list ap;
@@ -187,7 +168,7 @@ public:
     {
         memset(m_params, 0, sizeof(m_params));
     };
-    // ���ó�ʱ
+
     void SetTimeout(long timeout)
     {
         // 设置超时
@@ -206,8 +187,6 @@ public:
         //curl_easy_setopt(m_curl, CURLOPT_PROXYUSERPWD, 'user:password');
     };
 
-    // ����GET��POST����
-    // @param: buf ����HTTP���󵽵�body����
     int HttpRequest(const std::string& url, BuffV* buf, bool is_get = true)
     {
         if(url.empty()) {

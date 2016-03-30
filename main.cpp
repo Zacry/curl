@@ -14,7 +14,7 @@
 using namespace std;
 using namespace oms::comm;
 
-string g_strJdUrl = "http://ioms.360buy.com:10127/oom/service.ashx";
+string g_strJdUrl = "XXX";
 
 int main(int argc,char* argv[])
 {
@@ -28,7 +28,7 @@ int main(int argc,char* argv[])
 	std::stringstream oss;
 	BuffV buf;
 
-	oss << "Token=C99B094B08A87D68571B8F35572392A3" << "&orderId=" << argv[1];
+	oss << "Token=XXX" << "&orderId=" << argv[1];
 
 	CurlHttp::GetInstance()->SetHttpParams(oss.str().c_str());
 	CurlHttp::GetInstance()->SetHeader("Content-Type: application/json");
